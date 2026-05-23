@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import re
 import urllib.parse
 import urllib.request
@@ -25,11 +26,15 @@ from typing import Any
 
 from telethon import TelegramClient
 
-SESSION = "/Users/ilyadenisov/Documents/ObsidianVault/3. Resources/Instruments/tg/sessions/busi"
-API_ID = 31092404
-API_HASH = "c8a6e8133a4ab1384cb320652450b4ef"
-BOT_USERNAME = "AeoSnapshotBot"
+SESSION = os.environ.get(
+    "TELEGRAM_SESSION",
+    "/Users/ilyadenisov/Documents/ObsidianVault/3. Resources/Instruments/tg/sessions/busi",
+)
+BOT_USERNAME = os.environ.get("AEO_BOT_USERNAME", "AeoSnapshotBot")
+PAYMENT_LINK = os.environ.get("AEO_PAYMENT_LINK", "https://t.me/xrocket?start=inv_IyegiYQNlH9TRrS")
 STATE_PATH = Path(".local/aeo_feedback_state.json")
+LOCAL_TELEGRAM_CONFIG = Path(".local/telegram_api.json")
+PRIVATE_TG_SCRIPTS = Path("/Users/ilyadenisov/Documents/ObsidianVault/3. Resources/Instruments/tg/scripts")
 
 OUTREACH_TARGETS: list[str | int] = [
     7659614369,  # CashCow.agency
@@ -64,6 +69,35 @@ class FeedbackItem:
     reason: str
     last_incoming: str | None
     last_incoming_at: str | None
+
+
+def load_telegram_credentials() -> tuple[int, str]:
+    env_id = os.environ.get("TELEGRAM_API_ID")
+    env_hash = os.environ.get("TELEGRAM_API_HASH")
+    if env_id and env_hash:
+        return int(env_id), env_hash
+
+    if LOCAL_TELEGRAM_CONFIG.exists():
+        config = json.loads(LOCAL_TELEGRAM_CONFIG.read_text())
+        return int(config["api_id"]), str(config["api_hash"])
+
+    for script_path in PRIVATE_TG_SCRIPTS.glob("*.py"):
+        try:
+            text = script_path.read_text()
+        except OSError:
+            continue
+        id_match = re.search(r"API_ID\s*=\s*(?:int\(os\.environ\.get\([^,]+,\s*)?['\"]?(\d+)", text)
+        hash_match = re.search(
+            r"API_HASH\s*=\s*(?:os\.environ\.get\([^,]+,\s*)?['\"]([A-Za-z0-9]+)['\"]",
+            text,
+        )
+        if id_match and hash_match:
+            return int(id_match.group(1)), hash_match.group(1)
+
+    raise RuntimeError(
+        "Telegram API credentials were not found. Set TELEGRAM_API_ID and TELEGRAM_API_HASH "
+        "or create .local/telegram_api.json with api_id/api_hash."
+    )
 
 
 def load_state() -> dict[str, Any]:
@@ -172,12 +206,14 @@ def reply_text_for_bot(message: str) -> str:
             "Got it. I can prepare an AEO Snapshot preview for that site. "
             "The full AI Search Visibility Audit is $149 and includes a PDF report, "
             "llms.txt draft, schema/entity/citation fixes, and the first 10 priority actions. "
+            f"Payment link for the full audit: {PAYMENT_LINK}\n\n"
             "Please also send the target market and 2-3 competitors if you have them."
         )
     return (
         "AEO Snapshot is a $149 AI Search Visibility Audit. Send a website URL and target market, "
         "and I will prepare a preview with visibility score, citation gap, schema readiness, "
-        "llms.txt readiness, and first priority fixes."
+        "llms.txt readiness, and first priority fixes. "
+        f"When you are ready to order the full audit, use: {PAYMENT_LINK}"
     )
 
 
@@ -217,7 +253,8 @@ async def main() -> None:
     args = parser.parse_args()
 
     state = load_state()
-    client = TelegramClient(SESSION, API_ID, API_HASH)
+    api_id, api_hash = load_telegram_credentials()
+    client = TelegramClient(SESSION, api_id, api_hash)
     await client.connect()
     token = await get_bot_token(client)
     outreach = await inspect_outreach(client)

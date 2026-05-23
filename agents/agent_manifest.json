@@ -1,0 +1,48 @@
+{
+  "objective": "Earn at least $100 in real revenue from AEO Snapshot.",
+  "product": {
+    "name": "AEO Snapshot",
+    "url": "https://ilyayden.github.io/aeo-snapshot/",
+    "bot": "https://t.me/AeoSnapshotBot?start=audit",
+    "offer": "$149 AI Search Visibility Audit; $249 white-label partner pack"
+  },
+  "agents": [
+    {
+      "id": "market_research",
+      "file": "agents/market-research.agent.md",
+      "owns": ["channel discovery", "market proof", "buyer intent"],
+      "outputs": ["ranked channel shortlist", "source URLs", "posting constraints"]
+    },
+    {
+      "id": "sales_outreach",
+      "file": "agents/sales-outreach.agent.md",
+      "owns": ["public posts", "permission-based replies", "partner messages"],
+      "outputs": ["published links", "sent messages", "next follow-up date"]
+    },
+    {
+      "id": "feedback",
+      "file": "agents/feedback.agent.md",
+      "owns": ["Telegram replies", "bot updates", "objection classification"],
+      "outputs": ["feedback summary", "recommended offer change", "urgent leads"]
+    },
+    {
+      "id": "product",
+      "file": "agents/product.agent.md",
+      "owns": ["landing page", "pricing", "AEO audit UX", "copy"],
+      "outputs": ["deployed changes", "QA result", "conversion hypothesis"]
+    },
+    {
+      "id": "delivery",
+      "file": "agents/delivery.agent.md",
+      "owns": ["paid audit fulfillment", "report packaging", "customer handoff"],
+      "outputs": ["PDF audit", "llms.txt draft", "priority fix plan"]
+    }
+  ],
+  "guardrails": [
+    "No bot token or Telegram session in git.",
+    "No bulk cold DM after PeerFlood.",
+    "No fake testimonials, fake revenue, or unverifiable claims.",
+    "No paid ads or purchases without explicit user approval."
+  ]
+}
+

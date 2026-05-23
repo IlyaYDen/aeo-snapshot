@@ -49,7 +49,14 @@ python3 scripts/feedback_monitor.py --reply
 ```
 
 The script derives the bot token from BotFather history at runtime, keeps offsets in `.local/`, and
-does not commit secrets.
+does not commit secrets. Set `TELEGRAM_API_ID` and `TELEGRAM_API_HASH`, or keep a local
+`.local/telegram_api.json` file with `api_id` and `api_hash`.
+
+Current one-time payment invoice for the full audit:
+
+```text
+https://t.me/xrocket?start=inv_IyegiYQNlH9TRrS
+```
 
 ## Deploy To GitHub Pages
 
