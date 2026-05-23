@@ -82,7 +82,7 @@ const marketSignals = [
 const paymentLink = import.meta.env.VITE_PAYMENT_LINK as string | undefined
 const orderUrl =
   (import.meta.env.VITE_ORDER_URL as string | undefined) ||
-  'https://github.com/IlyaYDen/aeo-snapshot/issues/new?title=Buy%20%24149%20AI%20Search%20Visibility%20Audit&body=Website%3A%0ABrand%3A%0ATarget%20market%3A%0AEmail%3A'
+  'https://t.me/Illyapb?text=Hi%2C%20I%20want%20the%20%24149%20AI%20Search%20Visibility%20Audit.%20Website%3A%20'
 
 function splitLines(value: string) {
   return value

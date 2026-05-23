@@ -38,7 +38,7 @@ VITE_PAYMENT_LINK="https://buy.stripe.com/..." npm run build
 VITE_ORDER_URL="https://your-form-or-calendar-link" npm run build
 ```
 
-If `VITE_PAYMENT_LINK` is missing, the app opens a prefilled GitHub issue request URL.
+If `VITE_PAYMENT_LINK` is missing, the app opens a prefilled Telegram request link.
 
 ## Deploy To GitHub Pages
 
