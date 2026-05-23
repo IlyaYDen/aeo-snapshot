@@ -581,6 +581,7 @@ function App() {
                   <li>40+ AEO checks across entity, citations, schema, and AI answer readiness</li>
                   <li>Competitor comparison and first 10 prioritized fixes</li>
                   <li>PDF report, llms.txt draft, and implementation checklist</li>
+                  <li>Agency-friendly: resell as a $249+ white-label diagnostic</li>
                 </ul>
               </div>
               <div className="checkout">
