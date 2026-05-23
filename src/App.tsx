@@ -124,6 +124,24 @@ function statusForScore(value: number) {
   return 'At risk'
 }
 
+async function copyText(value: string) {
+  try {
+    await navigator.clipboard.writeText(value)
+    return true
+  } catch {
+    const textarea = document.createElement('textarea')
+    textarea.value = value
+    textarea.setAttribute('readonly', '')
+    textarea.style.position = 'fixed'
+    textarea.style.left = '-9999px'
+    document.body.appendChild(textarea)
+    textarea.select()
+    const copied = document.execCommand('copy')
+    document.body.removeChild(textarea)
+    return copied
+  }
+}
+
 function scoreAudit(form: AuditForm) {
   const services = splitLines(form.services)
   const competitors = splitLines(form.competitors)
@@ -308,9 +326,11 @@ function App() {
     .join('\n')}\n\nI can deliver a full AI Search Visibility Audit for $149: competitor table, schema recommendations, llms.txt draft, and the first 10 priority fixes.\n\nWant me to send the full report?`
 
   const copySalesEmail = async () => {
-    await navigator.clipboard.writeText(salesEmail)
-    setCopied(true)
-    window.setTimeout(() => setCopied(false), 1800)
+    const didCopy = await copyText(salesEmail)
+    if (didCopy) {
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1800)
+    }
   }
 
   const openOrder = () => {
