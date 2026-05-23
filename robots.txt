@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ilyayden.github.io/aeo-snapshot/sitemap.xml

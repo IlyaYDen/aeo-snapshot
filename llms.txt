@@ -1,0 +1,32 @@
+# AEO Snapshot
+
+> AEO Snapshot is a $149 AI Search Visibility Audit generator for websites that need to appear in ChatGPT, Google AI Overviews, Perplexity, and other AI answer surfaces.
+
+Website: https://ilyayden.github.io/aeo-snapshot/
+Telegram bot: https://t.me/AeoSnapshotBot?start=audit
+Repository: https://github.com/IlyaYDen/aeo-snapshot
+
+## What it does
+
+- Scores AI answer readiness, citation gap, entity clarity, schema readiness, and llms.txt readiness.
+- Generates a competitor comparison table and first 30-day priority fixes.
+- Exports a PDF report and a sales email draft.
+- Helps agencies and SEO consultants sell a one-time AI visibility diagnostic.
+
+## Offer
+
+The full audit costs $149 and includes:
+
+- PDF report for one website.
+- llms.txt draft.
+- schema/entity/citation recommendations.
+- first 10 priority fixes.
+- partner-friendly white-label delivery format.
+
+## Best fit
+
+- SEO consultants.
+- digital agencies.
+- local service businesses.
+- SaaS websites.
+- founders worried about declining search clicks from AI answers.
