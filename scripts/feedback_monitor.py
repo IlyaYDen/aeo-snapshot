@@ -4,9 +4,11 @@
 The script reads:
 - Telegram DM feedback for the first outreach batch.
 - Incoming messages sent to @AeoSnapshotBot.
+- Incoming messages in the temporary mail.tm inbox used for directory sign-ups.
 
 It derives the bot token from BotFather history at runtime and stores only a
-Bot API update offset in .local/aeo_feedback_state.json.
+Bot API update offset plus seen temporary-email message IDs in
+.local/aeo_feedback_state.json.
 """
 
 from __future__ import annotations
@@ -34,7 +36,9 @@ BOT_USERNAME = os.environ.get("AEO_BOT_USERNAME", "AeoSnapshotBot")
 PAYMENT_LINK = os.environ.get("AEO_PAYMENT_LINK", "https://t.me/xrocket?start=inv_IyegiYQNlH9TRrS")
 STATE_PATH = Path(".local/aeo_feedback_state.json")
 LOCAL_TELEGRAM_CONFIG = Path(".local/telegram_api.json")
+LOCAL_ACCOUNTS_PATH = Path(".local/accounts.json")
 PRIVATE_TG_SCRIPTS = Path("/Users/ilyadenisov/Documents/ObsidianVault/3. Resources/Instruments/tg/scripts")
+MAIL_TM_API = "https://api.mail.tm"
 
 OUTREACH_TARGETS: list[str | int] = [
     7659614369,  # CashCow.agency
@@ -59,6 +63,10 @@ INTEREST_TERMS = (
     "domain",
     "website",
 )
+MAIL_CONFIRMATION_TERMS = ("approved", "published", "live", "accepted", "listed")
+MAIL_VERIFICATION_TERMS = ("verify", "verification", "confirm", "activate")
+MAIL_REJECTION_TERMS = ("rejected", "declined", "not approved")
+MAIL_ACK_TERMS = ("submission received", "submitted", "received", "thanks for submitting", "in the queue")
 
 
 @dataclass
@@ -127,6 +135,45 @@ def bot_api(token: str, method: str, payload: dict[str, Any] | None = None) -> d
             if attempt < 2:
                 sleep(1.5 * (attempt + 1))
     raise RuntimeError(f"Bot API {method} failed: {last_error}")
+
+
+def load_temp_mail_account() -> dict[str, str] | None:
+    if not LOCAL_ACCOUNTS_PATH.exists():
+        return None
+    try:
+        account = json.loads(LOCAL_ACCOUNTS_PATH.read_text()).get("temp_email") or {}
+    except (OSError, json.JSONDecodeError):
+        return None
+    if account.get("provider") != "mail.tm":
+        return None
+    token = account.get("token")
+    email = account.get("email")
+    if not token or not email:
+        return None
+    return {"token": str(token), "email": str(email)}
+
+
+def mail_tm_api(token: str, path: str) -> dict[str, Any]:
+    request = urllib.request.Request(
+        f"{MAIL_TM_API}{path}",
+        headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+        method="GET",
+    )
+    with urllib.request.urlopen(request, timeout=25) as response:
+        return json.loads(response.read().decode())
+
+
+def classify_mail(subject: str | None, intro: str | None) -> tuple[str, str]:
+    text = f"{subject or ''} {intro or ''}".lower()
+    if any(term in text for term in MAIL_REJECTION_TERMS):
+        return "mail_rejection", "directory or community rejected the listing"
+    if any(term in text for term in MAIL_VERIFICATION_TERMS):
+        return "mail_verification", "email verification or account activation needed"
+    if any(term in text for term in MAIL_ACK_TERMS):
+        return "mail_submission_ack", "directory acknowledged the submission"
+    if any(term in text for term in MAIL_CONFIRMATION_TERMS):
+        return "mail_confirmation", "directory or community may have approved or published"
+    return "mail_update", "temporary inbox received a new message"
 
 
 def classify_text(text: str | None) -> tuple[str, str]:
@@ -247,6 +294,49 @@ def inspect_bot_updates(token: str, state: dict[str, Any], should_reply: bool) -
     return rows
 
 
+def inspect_temp_mail(state: dict[str, Any]) -> tuple[list[dict[str, Any]], str | None]:
+    account = load_temp_mail_account()
+    if not account:
+        return [], None
+
+    try:
+        data = mail_tm_api(account["token"], "/messages?page=1")
+    except Exception as exc:
+        return [], f"{type(exc).__name__}: {str(exc)[:240]}"
+
+    seen_ids = {str(value) for value in state.get("mail_seen_ids", [])}
+    messages = data if isinstance(data, list) else data.get("hydra:member") or []
+    rows: list[dict[str, Any]] = []
+    current_ids: list[str] = []
+
+    for message in messages:
+        message_id = str(message.get("id") or "")
+        if not message_id:
+            continue
+        current_ids.append(message_id)
+        if message_id in seen_ids:
+            continue
+
+        sender = message.get("from") or {}
+        subject = str(message.get("subject") or "").strip()
+        intro = str(message.get("intro") or "").strip()
+        status, reason = classify_mail(subject, intro)
+        rows.append(
+            {
+                "id": message_id,
+                "from": sender.get("address") or sender.get("name"),
+                "subject": subject[:220],
+                "intro": intro[:500],
+                "received_at": message.get("createdAt") or message.get("updatedAt"),
+                "status": status,
+                "reason": reason,
+            }
+        )
+
+    state["mail_seen_ids"] = list(dict.fromkeys(current_ids + list(seen_ids)))[:100]
+    return rows, None
+
+
 async def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--reply", action="store_true", help="Reply to new bot inquiries.")
@@ -266,12 +356,15 @@ async def main() -> None:
     except Exception as exc:
         bot_updates = []
         bot_error = f"{type(exc).__name__}: {str(exc)[:240]}"
+    mail_updates, mail_error = inspect_temp_mail(state)
     save_state(state)
 
     summary: dict[str, int] = {}
     for item in outreach:
         summary[item.status] = summary.get(item.status, 0) + 1
     for update in bot_updates:
+        summary[update["status"]] = summary.get(update["status"], 0) + 1
+    for update in mail_updates:
         summary[update["status"]] = summary.get(update["status"], 0) + 1
 
     print(
@@ -282,6 +375,8 @@ async def main() -> None:
                 "outreach": [item.__dict__ for item in outreach],
                 "bot_updates": bot_updates,
                 "bot_error": bot_error,
+                "mail_updates": mail_updates,
+                "mail_error": mail_error,
             },
             ensure_ascii=False,
             indent=2,

@@ -44,9 +44,32 @@ Checked on 2026-05-23. Goal: first $100+ revenue from AEO Snapshot without bulk 
    - Relevant AI-tool discovery intent.
    - Lower priority because queue/pricing can slow first revenue.
 
+9. The Next AI: https://www.thenextai.com/submit-ai-tool/
+   - Their submit page advertises 120k+ monthly visitors, free basic listings, review within 48
+     hours, and a dofollow backlink.
+   - Status: submitted and email receipt received.
+
+10. ToolNova: https://toolnova.ai/submit-tool
+    - Their submit page has a $0 basic listing and says free listings are reviewed within 7 days.
+    - Status: submitted through the public form endpoint.
+
+11. Launching Next: https://www.launchingnext.com/submit/
+    - Their submit page confirms free submission, 10,000+ startups published, a permanent profile,
+      and newsletter/Twitter distribution if approved.
+    - Constraint: free queue is slow; their page says it typically takes 3 months to review/publish.
+    - Status: submitted and redirected to `Submission Received`.
+
+12. BetterLaunch: https://www.betterlaunch.co/submit-your-startup
+    - Their submit page advertises a free editorial listing, DR 58, backlink, founder traffic,
+      and lifetime visibility.
+    - Constraint: actual submit flow requires Clerk account sign-in.
+
+13. Future Tools: https://www.futuretools.io/submit-a-tool
+    - Relevant AI-tool directory with a visible submit form and public newsletter positioning.
+    - Constraint: CAPTCHA loaded in form, so do not force through automation.
+
 ## Current Interpretation
 
 Telegram cold outreach is weak right now: 5 ignored, 1 "no resale channel / $149" objection, and a
 PeerFlood signal after additional DMs. The next move should be marketplace listings and public,
 permission-based posts.
-

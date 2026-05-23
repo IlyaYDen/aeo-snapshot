@@ -8,8 +8,8 @@
     "public_site": "live",
     "telegram_bot": "live",
     "payment_invoice": "created",
-    "latest_feedback": "5 ignored, 1 fit/price objection, 0 new bot updates",
-    "confirmed_directory_submissions": 3
+    "latest_feedback": "5 ignored, 1 fit/price objection, 0 bot updates, 3 directory receipts",
+    "confirmed_directory_submissions": 7
   },
   "next_actions": [
     {
@@ -25,7 +25,7 @@
     },
     {
       "owner": "sales_outreach",
-      "action": "Monitor submitted directories; account-based marketplaces remain next fastest channel.",
+      "action": "Monitor submitted directories and push permission-based posts/listings using the sample report.",
       "status": "in_progress"
     },
     {
