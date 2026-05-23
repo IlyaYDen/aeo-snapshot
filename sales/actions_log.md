@@ -15,6 +15,15 @@
 - ToolNova: submitted the free AI-tool listing with the site favicon as logo; the form endpoint
   returned `code: OK`.
 
+### Targeted Agency Partner Outreach
+
+- BeeSeen: submitted a white-label AEO Snapshot partner pitch through the site's HubSpot contact
+  form; API returned a thank-you redirect.
+- Smart GEO Agency: submitted a partner pitch through the site's Fluent Forms endpoint; API returned
+  a success message.
+- GEO Agency: submitted a partner pitch through the site's Contact Form 7 endpoint; API returned
+  `mail_sent`.
+
 ### Attempted But Not Confirmed
 
 - SubmitAItools: stopped at human verification before form.
@@ -34,6 +43,17 @@
   not forced through automation.
 - AIToolSync: submit page advertises 100,000+ monthly visitors and free/paid plans, but the visible
   action path is pricing-led; skipped for now in favor of confirmed free forms.
+- Generative Optimization Agency: relevant GEO/AEO agency, but the SureForms REST submit rejected
+  nonce/browser automation; not sent.
+- Search Rivals: relevant AI SEO/GEO agency, but the visible form uses reCAPTCHA/disabled submit;
+  not sent.
+- AI Syndicate: relevant GEO/AEO agency with high visible pricing, but only public email was found;
+  not sent from the temporary inbox.
+- Tower GEO and RocketGEO.ai: relevant, but contact paths are Calendly/email rather than a sales
+  contact form; not contacted.
+- AEO Agency USA and Geovate: relevant agency prospects, but forms require phone numbers; skipped
+  rather than using fake contact data.
+- The Best GEO: relevant agency prospect, but the contact form is protected by reCAPTCHA; skipped.
 
 ### Local Accounts And Inboxes
 
@@ -50,13 +70,15 @@
 - Bot updates: none since last checked.
 - Temporary inbox: The Next AI receipt, ToolNova form receipt, and Launching Next queue receipt.
 - Confirmed free listing submissions now: 7.
+- Confirmed agency partner form submissions now: 3.
 
 ### Next Sales Move
 
-The fastest remaining buyer-intent route is an account-based marketplace listing:
+The fastest remaining buyer-intent routes are:
 
 - Fiverr gig using `sales/marketplace_listing.md`.
 - Upwork Project Catalog using `sales/marketplace_listing.md`.
+- Follow-up on agency partner replies from BeeSeen, Smart GEO Agency, and GEO Agency.
 
 Both likely require account/profile verification and platform-native payments.
 
