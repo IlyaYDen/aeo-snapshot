@@ -7,7 +7,7 @@ URL into a preview report with:
 - Competitor comparison table.
 - Priority fixes for the first 30 days.
 - PDF export and a sales email draft.
-- Configurable $149 order/payment CTA.
+- Configurable $149 order/payment CTA, with `@AeoSnapshotBot` as the default request inbox.
 
 ## Why This Wedge
 
@@ -38,7 +38,18 @@ VITE_PAYMENT_LINK="https://buy.stripe.com/..." npm run build
 VITE_ORDER_URL="https://your-form-or-calendar-link" npm run build
 ```
 
-If `VITE_PAYMENT_LINK` is missing, the app opens a prefilled Telegram request link.
+If `VITE_PAYMENT_LINK` is missing, the app opens `@AeoSnapshotBot`.
+
+## Monitor Feedback
+
+Use the local monitor to inspect outreach replies and bot inquiries:
+
+```bash
+python3 scripts/feedback_monitor.py --reply
+```
+
+The script derives the bot token from BotFather history at runtime, keeps offsets in `.local/`, and
+does not commit secrets.
 
 ## Deploy To GitHub Pages
 
@@ -48,4 +59,4 @@ This repo is configured to use `/aeo-snapshot/` as the Vite base path when `GITH
 GITHUB_PAGES=true npm run build
 ```
 
-The included GitHub Action builds the app and publishes the `dist` folder to Pages.
+The current deployment publishes the built `dist` folder to the `gh-pages` branch.

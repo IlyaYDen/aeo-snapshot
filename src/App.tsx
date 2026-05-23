@@ -82,7 +82,7 @@ const marketSignals = [
 const paymentLink = import.meta.env.VITE_PAYMENT_LINK as string | undefined
 const orderUrl =
   (import.meta.env.VITE_ORDER_URL as string | undefined) ||
-  'https://t.me/Illyapb?text=Hi%2C%20I%20want%20the%20%24149%20AI%20Search%20Visibility%20Audit.%20Website%3A%20'
+  'https://t.me/AeoSnapshotBot?start=audit'
 
 function splitLines(value: string) {
   return value
@@ -587,7 +587,7 @@ function App() {
                 <strong>$149</strong>
                 <span>one-time audit</span>
                 <button type="button" onClick={openOrder}>
-                  {paymentLink ? 'Pay and request audit' : 'Request audit'}
+                  {paymentLink ? 'Pay and request audit' : 'Open audit bot'}
                   <ArrowRight size={16} />
                 </button>
               </div>
