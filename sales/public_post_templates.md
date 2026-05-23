@@ -10,6 +10,7 @@ I built a small tool that turns a website URL into an AI-search readiness snapsh
 It is intentionally a lightweight diagnostic, not a promise that a site will rank inside any model. I made it because AI answers are changing discovery and many SEO audits still focus only on classic SERPs.
 
 Demo: https://ilyayden.github.io/aeo-snapshot/
+Sample report: https://ilyayden.github.io/aeo-snapshot/sample-audit.html
 
 I would be useful to hear where the scoring feels wrong or what you would add before trusting this as an audit.
 ```
@@ -24,6 +25,7 @@ The idea: instead of another generic SEO audit, it checks how ready a site is fo
 I can run 3 free mini-snapshots for people here if you send a domain and target market. If an agency wants the full white-label PDF version for a client, I am selling that as a paid audit.
 
 Tool: https://ilyayden.github.io/aeo-snapshot/
+Sample report: https://ilyayden.github.io/aeo-snapshot/sample-audit.html
 Bot for requests: https://t.me/AeoSnapshotBot?start=audit
 ```
 
@@ -37,5 +39,6 @@ I built AEO Snapshot, a 48-hour AI Search Visibility Audit you can resell white-
 The direct audit is $149. The white-label partner pack is $249 and you can resell it under your brand.
 
 Demo: https://ilyayden.github.io/aeo-snapshot/
+Sample report: https://ilyayden.github.io/aeo-snapshot/sample-audit.html
 Intake bot: https://t.me/AeoSnapshotBot?start=audit
 ```

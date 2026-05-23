@@ -83,6 +83,7 @@ const paymentLink = import.meta.env.VITE_PAYMENT_LINK as string | undefined
 const orderUrl =
   (import.meta.env.VITE_ORDER_URL as string | undefined) ||
   'https://t.me/AeoSnapshotBot?start=audit'
+const sampleReportUrl = `${import.meta.env.BASE_URL}sample-audit.html`
 
 function splitLines(value: string) {
   return value
@@ -353,6 +354,7 @@ function App() {
           <a className="active" href="#audit">
             New audit
           </a>
+          <a href={sampleReportUrl}>Sample report</a>
           <a href="#market">Market proof</a>
           <a href="#playbook">Sales playbook</a>
         </nav>
@@ -587,6 +589,9 @@ function App() {
               <div className="checkout">
                 <strong>$149</strong>
                 <span>one-time audit</span>
+                <a className="sample-link" href={sampleReportUrl}>
+                  View sample report
+                </a>
                 <button type="button" onClick={openOrder}>
                   {paymentLink ? 'Pay and request audit' : 'Open audit bot'}
                   <ArrowRight size={16} />

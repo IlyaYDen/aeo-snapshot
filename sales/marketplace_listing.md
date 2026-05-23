@@ -38,6 +38,9 @@ You get:
 Best for SaaS companies, agencies, consultants, local businesses, and founders who already rely on SEO or content for leads.
 
 I do not promise rankings or guaranteed AI mentions. This is a practical diagnostic and action plan.
+
+Sample report:
+https://ilyayden.github.io/aeo-snapshot/sample-audit.html
 ```
 
 Packages:
@@ -60,6 +63,8 @@ Project summary:
 
 ```text
 I will audit how ready your website is for AI search, answer engines, and generative discovery. The report covers citation readiness, entity clarity, schema, llms.txt, competitor gaps, and the first 10 fixes to improve how AI systems understand your brand.
+
+Sample report: https://ilyayden.github.io/aeo-snapshot/sample-audit.html
 ```
 
 Deliverables:
@@ -73,4 +78,3 @@ Client requirements:
 ```text
 Website URL, target market, primary product/service page, and 2-3 competitors if available.
 ```
-

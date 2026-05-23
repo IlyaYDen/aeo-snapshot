@@ -43,3 +43,10 @@ The fastest remaining buyer-intent route is an account-based marketplace listing
 - Upwork Project Catalog using `sales/marketplace_listing.md`.
 
 Both likely require account/profile verification and platform-native payments.
+
+### Conversion Asset Added
+
+- Public sample report prepared for deployment:
+  https://ilyayden.github.io/aeo-snapshot/sample-audit.html
+- Use it in marketplace listings and public posts to show the concrete deliverable before asking for
+  $149.

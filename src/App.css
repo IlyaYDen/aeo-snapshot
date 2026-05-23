@@ -629,6 +629,20 @@ tr:last-child td {
   background: var(--teal);
 }
 
+.sample-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  color: var(--teal-dark);
+  background: #fff;
+  font-size: 13px;
+  font-weight: 760;
+  text-decoration: none;
+}
+
 .market-band,
 .playbook {
   margin-bottom: 28px;

@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AEO Snapshot Sample Audit</title>
+    <meta
+      name="description"
+      content="Sample AI Search Visibility Audit deliverable from AEO Snapshot."
+    />
+    <style>
+      :root {
+        --text-strong: #121820;
+        --text: #354250;
+        --muted: #687586;
+        --border: #e3e8ee;
+        --teal: #087a80;
+        --teal-dark: #055d63;
+        --amber: #ea8a00;
+        --red: #d92d20;
+        --green: #138a38;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        color: var(--text);
+        background: #f7fafb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      a {
+        color: var(--teal-dark);
+      }
+
+      .shell {
+        width: min(1120px, calc(100% - 28px));
+        margin: 0 auto;
+        padding: 28px 0 48px;
+      }
+
+      .hero,
+      .panel,
+      .cta {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.045);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 24px;
+        align-items: end;
+        padding: 28px;
+      }
+
+      .eyeline {
+        margin: 0 0 8px;
+        color: var(--teal-dark);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 10px;
+        color: var(--text-strong);
+        font-size: clamp(30px, 4vw, 46px);
+        line-height: 1.05;
+      }
+
+      h2 {
+        margin-bottom: 14px;
+        color: var(--text-strong);
+        font-size: 22px;
+      }
+
+      h3 {
+        margin-bottom: 8px;
+        color: var(--text-strong);
+        font-size: 16px;
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 18px;
+        border-radius: 7px;
+        color: #fff;
+        background: var(--teal);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .meta {
+        display: grid;
+        gap: 7px;
+        min-width: 230px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .meta strong {
+        color: var(--text-strong);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+        margin: 16px 0;
+      }
+
+      .score {
+        padding: 18px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .score span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 750;
+      }
+
+      .score strong {
+        display: block;
+        margin-top: 12px;
+        color: var(--text-strong);
+        font-size: 32px;
+      }
+
+      .panel {
+        margin-top: 14px;
+        padding: 24px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+      }
+
+      th {
+        color: var(--text-strong);
+        background: #fafafa;
+      }
+
+      .priority {
+        display: inline-flex;
+        padding: 4px 8px;
+        border-radius: 999px;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .high {
+        background: var(--red);
+      }
+
+      .medium {
+        background: var(--amber);
+      }
+
+      .low {
+        background: var(--green);
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      pre {
+        overflow-x: auto;
+        margin: 0;
+        padding: 16px;
+        border-radius: 8px;
+        color: #13202f;
+        background: #f2f6f8;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      ol,
+      ul {
+        margin-bottom: 0;
+        padding-left: 22px;
+        line-height: 1.65;
+      }
+
+      li + li {
+        margin-top: 6px;
+      }
+
+      .cta {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: center;
+        margin-top: 14px;
+        padding: 24px;
+      }
+
+      .disclaimer {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      @media (max-width: 860px) {
+        .hero,
+        .two-col,
+        .cta {
+          grid-template-columns: 1fr;
+        }
+
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero,
+        .panel,
+        .cta {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyeline">Sample deliverable</p>
+          <h1>AI Search Visibility Audit for BluePeak Plumbing</h1>
+          <p>
+            This sample shows the structure of the $149 AEO Snapshot audit: scorecard, competitor
+            gap, answer-readiness checks, llms.txt draft, schema direction, and the first 10 fixes.
+          </p>
+          <a class="button" href="https://t.me/AeoSnapshotBot?start=audit">Request this audit</a>
+        </div>
+        <div class="meta">
+          <span><strong>Sample domain:</strong> bluepeakplumbing.com</span>
+          <span><strong>Market:</strong> Denver metro</span>
+          <span><strong>Buyer:</strong> Homeowners needing emergency plumbing</span>
+          <span><strong>Audit price:</strong> $149</span>
+        </div>
+      </section>
+
+      <section class="grid" aria-label="Sample scores">
+        <article class="score">
+          <span>Visibility score</span>
+          <strong>68/100</strong>
+        </article>
+        <article class="score">
+          <span>Citation gap</span>
+          <strong>42%</strong>
+        </article>
+        <article class="score">
+          <span>Entity clarity</span>
+          <strong>74/100</strong>
+        </article>
+        <article class="score">
+          <span>Schema readiness</span>
+          <strong>66/100</strong>
+        </article>
+        <article class="score">
+          <span>llms.txt readiness</span>
+          <strong>46/100</strong>
+        </article>
+      </section>
+
+      <section class="panel">
+        <h2>Executive Summary</h2>
+        <p>
+          BluePeak has enough local-service specificity to be understood by answer engines, but it
+          lacks explicit citation proof and machine-readable guidance. The fastest win is to publish
+          an llms.txt file, strengthen LocalBusiness and Service schema, and create short,
+          answer-ready service pages that mention Denver-area evidence, reviews, guarantees, and
+          emergency response details.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>Competitor Snapshot</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Visibility</th>
+              <th>Gap</th>
+              <th>Entity</th>
+              <th>Schema</th>
+              <th>llms.txt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>bluepeakplumbing.com</td>
+              <td>68</td>
+              <td>42%</td>
+              <td>74</td>
+              <td>66</td>
+              <td>46</td>
+            </tr>
+            <tr>
+              <td>rotorooter.com</td>
+              <td>83</td>
+              <td>24%</td>
+              <td>88</td>
+              <td>79</td>
+              <td>61</td>
+            </tr>
+            <tr>
+              <td>mrrooter.com</td>
+              <td>78</td>
+              <td>29%</td>
+              <td>82</td>
+              <td>74</td>
+              <td>58</td>
+            </tr>
+            <tr>
+              <td>benjaminfranklinplumbing.com</td>
+              <td>81</td>
+              <td>26%</td>
+              <td>84</td>
+              <td>76</td>
+              <td>63</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>First 10 Priority Fixes</h2>
+        <ol>
+          <li><span class="priority high">High</span> Publish an llms.txt file with service pages, locations, reviews, and quote-worthy facts.</li>
+          <li><span class="priority high">High</span> Add LocalBusiness, PlumbingService, FAQPage, and Review schema to core pages.</li>
+          <li><span class="priority high">High</span> Create short answer blocks for emergency plumber, leak repair, water heater repair, and drain cleaning.</li>
+          <li><span class="priority medium">Medium</span> Add Denver, Aurora, Lakewood, and Englewood service-area evidence to page copy.</li>
+          <li><span class="priority medium">Medium</span> Consolidate NAP, hours, and emergency availability across footer, GBP, and directories.</li>
+          <li><span class="priority medium">Medium</span> Add comparison proof against national competitors without unverifiable claims.</li>
+          <li><span class="priority medium">Medium</span> Add review snippets and source links that answer engines can cite.</li>
+          <li><span class="priority medium">Medium</span> Create a concise "why choose BluePeak" entity section.</li>
+          <li><span class="priority low">Low</span> Add author or reviewer information for plumbing guidance pages.</li>
+          <li><span class="priority low">Low</span> Recheck AI-answer prompts after changes and record citation movement.</li>
+        </ol>
+      </section>
+
+      <section class="two-col">
+        <article class="panel">
+          <h2>llms.txt Draft</h2>
+          <pre># BluePeak Plumbing
+
+Website: https://bluepeakplumbing.com
+Service area: Denver, Aurora, Lakewood, Englewood
+Primary services: emergency plumbing, drain cleaning, water heater installation, leak repair, pipe repair
+
+Important pages:
+- /services/emergency-plumbing
+- /services/water-heater-installation
+- /services/drain-cleaning
+- /locations/denver
+- /reviews
+
+Preferred summary:
+BluePeak Plumbing provides residential plumbing repair and emergency plumbing service across the Denver metro area.</pre>
+        </article>
+
+        <article class="panel">
+          <h2>Schema Direction</h2>
+          <pre>{
+  "@context": "https://schema.org",
+  "@type": "PlumbingService",
+  "name": "BluePeak Plumbing",
+  "areaServed": ["Denver", "Aurora", "Lakewood", "Englewood"],
+  "serviceType": ["Emergency plumbing", "Leak repair", "Drain cleaning"],
+  "url": "https://bluepeakplumbing.com",
+  "priceRange": "$$"
+}</pre>
+        </article>
+      </section>
+
+      <section class="cta">
+        <div>
+          <h2>Order the full audit</h2>
+          <p>
+            Send your website, target market, and 2-3 competitors. The full report includes a PDF,
+            llms.txt draft, schema/entity/citation recommendations, and a 30-day action plan.
+          </p>
+        </div>
+        <a class="button" href="https://t.me/AeoSnapshotBot?start=audit">Open audit bot</a>
+      </section>
+
+      <p class="disclaimer">
+        This is a sample report for demonstration. BluePeak Plumbing is used as a placeholder
+        example, not as a claimed customer or testimonial.
+      </p>
+    </main>
+  </body>
+</html>

@@ -9,6 +9,8 @@ URL into a preview report with:
 - PDF export and a sales email draft.
 - Configurable $149 order/payment CTA, with `@AeoSnapshotBot` as the default request inbox.
 
+Public sample audit: https://ilyayden.github.io/aeo-snapshot/sample-audit.html
+
 ## Why This Wedge
 
 The product sells a one-time diagnostic instead of a full monitoring subscription. One $149 sale is
